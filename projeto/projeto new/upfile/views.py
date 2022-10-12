@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from .models import FormArquivo
 from django.contrib import messages
+from pymongo import MongoClient
+
+client = pymongo.MongoClient('connection_string')
+db = client['db_name']
+
 
 # Create your views here.
 def index(request):
