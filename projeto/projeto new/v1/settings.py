@@ -85,15 +85,15 @@ WSGI_APPLICATION = "v1.wsgi.application"
 
 
 """
-DB_NAME = 'mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/myFirstDatabase'
+DB_NAME = 'mongodb+srv://<iadmin>:<iadmin>@<mongo-express>.mongodb.net/upfile'
 
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
-            'NAME': 'employees',
+            'NAME': 'upfile',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/myFirstDatabase'
+                'host': 'mongodb+srv://<iadmin>:<iadmin>@<mongo-express>.mongodb.net/upfile'
             }  
         }
 }
