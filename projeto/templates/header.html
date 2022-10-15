@@ -4,8 +4,8 @@
         <img src="{%static 'imgs/logo_lia.png'%}">
     </div>
     <div class="header-menu">
-        <a href="base.html" target="_parent">Home</a>
-        <a href="info.html" target="_parent">Informações</a>
-        <a href="tutorial.html" target="_parent">Passo-a-Passo</a>
+        <a href="{% url 'index' %}" target="_parent">Home</a>
+        <a href="{% url 'info' %}" target="_parent">Informações</a>
+        <a href="{% url 'tutorial' %}" target="_parent">Passo-a-Passo</a>
     </div>
 </div>

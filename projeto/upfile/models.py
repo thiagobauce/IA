@@ -1,8 +1,11 @@
+from distutils.command.upload import upload
+from email.policy import default
 from django.db import models
+from django import forms
 
 class User(models.Model):
     nome = models.CharField(max_length=50)
-    sobrenome = models.CharField(max_length=50, blank=True)
+    sobrenome = models.CharField(max_length=50)
     sexo = models.CharField(max_length=1, blank=True)
     email = models.EmailField()
     cidade = models.CharField(max_length=50)
@@ -16,7 +19,14 @@ class User(models.Model):
 class Arquivo(models.Model):
     nome = models.CharField(max_length=50)
     extensao = models.CharField(max_length=5)
-    arquivo = models.FileField()
+    arquivo = models.FileField(upload_to='fotos/%Y/%m/%d')
+    idarq = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nome
+
+class FormUpload(forms.ModelForm):
+    class Meta:
+        model = Arquivo
+        exclude = ('idarq','nome','extensao',)
+        

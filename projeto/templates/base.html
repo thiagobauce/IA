@@ -12,7 +12,18 @@
 
 <body>
     {%include 'header.html'%}
-    {%block cont%}{%endblock%}
+
+    {%if messages%}
+        <br>
+        {%for msg in messages%}
+            <div class="alert { messages.tags}" role="alert">
+                {{message}}
+            </div>
+        {%endfor%}
+    {%endif%}
+    
+    {%block ind%}{%endblock%}
+
     {%include 'footer.html'%}
 </body>
 </html>
