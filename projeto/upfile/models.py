@@ -6,7 +6,7 @@ from django import forms
 class User(models.Model):
     nome = models.CharField(max_length=50)
     sobrenome = models.CharField(max_length=50)
-    sexo = models.CharField(max_length=1, blank=True)
+    sexo = models.CharField(max_length=1)
     email = models.EmailField()
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
@@ -25,8 +25,14 @@ class Arquivo(models.Model):
     def __str__(self):
         return self.nome
 
+class FormUser(forms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ()
+
 class FormUpload(forms.ModelForm):
     class Meta:
         model = Arquivo
         exclude = ('idarq','nome','extensao',)
+
         

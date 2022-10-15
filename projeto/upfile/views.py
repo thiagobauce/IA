@@ -1,8 +1,42 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from pymongo import MongoClient
-from .models import User, Arquivo,FormUpload
-import os, gridfs, fileinput
+from .models import User, Arquivo, FormUpload, FormUser
+import os, gridfs
+from datetime import datetime
+
+
+def encontra_pasta():
+    ano = datetime.now().year
+    mes = datetime.now().month
+    dia = datetime.now().day
+    
+    return '/'+str(ano)+'/'+str(mes)+'/'+str(dia)
+
+def salva_arquivo():
+    parcial = encontra_pasta()
+                
+    caminho = 'C:/Users/ThiagoBauce/Documents/GitHub/IA/projeto/media/fotos' + parcial
+    os.chdir(caminho) 
+        
+    for file in os.listdir():
+        file_path = f"{caminho}/{file}" 
+        with open(file_path, 'rb') as f: 
+            idarq = fs.put(f)
+            print(f)
+            arquivo = os.path.split(f)
+            nomearq = arquivo[0]
+            extensao = arquivo[1]
+            
+            arq = {
+                'nomearq':nomearq,
+                'extensao':extensao,
+                'arquivo':f,
+                'idarq':idarq
+            }
+            if not collection2.find_one(arq):
+                collection2.insert_one(arq)
+
 
 client = MongoClient(
     'mongodb+srv://iadmin:iadmin@iacluster.plyafn9.mongodb.net/?retryWrites=true&w=majority')
@@ -21,9 +55,15 @@ def index(request):
 
 def insert(request):  
     if request.method != 'POST':
-        form = FormUpload()
-        return render(request, 'upfile/insere.html',{'form' : form})
+        form1 = FormUpload()
+        return render(request, 'upfile/insere.html',{'form1' : form1})
     
+    form1 = FormUpload(request.POST,request.FILES)
+    
+    if form1.is_valid():
+        form1.save()
+        salva_arquivo()
+        
     nome = request.POST.get('nome')
     sobrenome = request.POST.get('sobrenome')
     email = request.POST.get('email')
@@ -31,10 +71,7 @@ def insert(request):
     cidade = request.POST.get('cidade')
     estado = request.POST.get('estado')
     descricao = request.POST.get('descricao')
-     
     arquivo = request.POST.get('arquivo')
-    
-    
     if not nome:
         messages.error(request,'Campo *nome* é obrigatório')
     elif not sobrenome:
@@ -63,31 +100,9 @@ def insert(request):
             }
         collection1.insert_one(user)
 
-        form = FormUpload(request.FILES)
-        if form.is_valid():
-            form.save()
-        
-        split_tup = os.path.splitext(arquivo)
-        nomearq = split_tup[0]
-        extensao = split_tup[1]
-        
-        
-        
-        #idarq = fs.put(arquivo,filename=nomearq,bar=extensao)
-    
-        arq = {
-            'nomearq':nomearq,
-            'extensao':extensao,
-            'arquivo':arquivo,
-            #'idarq':idarq
-            }
-        
-        collection2.insert_one(arq)
-        
         messages.success(request, ' Registro salvo com Sucesos')
     
-    return render(request, 'upfile/insere.html',{'form' : form})
-
+    return redirect('index')
 
 def tutorial(request):
     #users = User.objects.all() selec * from USER

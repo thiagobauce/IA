@@ -2,88 +2,87 @@
 
 {%block ind%}
 <br>
-<form action="{%url 'insert' %}" method="post">
+<form action="{%url 'insert' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <fieldset>
-        <fieldset class="grupo">
+    <div class="campo">
+        <br>
+        <fieldset>
+            <fieldset class="grupo">
+                <div class="campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" style="width: 10em" value="">
+                </div>
+                <div class="campo">
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" id="snome" name="sobrenome" style="width: 10em" value="">
+                </div>
+            </fieldset>
             <div class="campo">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" style="width: 10em" value="">
+                <label>Sexo</label>
+                <label>
+                    <input type="radio" name="sexo" value="m"> Masculino
+                </label>
+                <label>
+                    <input type="radio" name="sexo" value="f"> Feminino
+                </label>
+                <label>
+                    <input type="radio" name="sexo" value="n"> Outro
+                </label>
             </div>
             <div class="campo">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="snome" name="sobrenome" style="width: 10em" value="">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" style="width: 20em" value="">
+            </div>
+
+            <fieldset class="grupo">
+                <div class="campo">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" style="width: 10em" value="">
+                </div>
+                <div class="campo">
+                    <label for="estado">Estado</label>
+                    <select name="estado" id="estado">
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <div class="campo">
+                <label for="descricao">Descricao</label>
+                <textarea rows="6" style="width: 20em" id="mensagem" name="descricao"></textarea>
             </div>
         </fieldset>
-        <div class="campo">
-            <label>Sexo</label>
-            <label>
-                <input type="radio" name="sexo" value="m"> Masculino
-            </label>
-            <label>
-                <input type="radio" name="sexo" value="f"> Feminino
-            </label>
-            <label>
-                <input type="radio" name="sexo" value="n"> Outro
-            </label>
-        </div>
-        <div class="campo">
-            <label for="email">E-mail</label>
-            <input type="text" id="email" name="email" style="width: 20em" value="">
-        </div>
+        <br>
+        {{form1}}
+        <br>
+    </div>
 
-        <fieldset class="grupo">
-            <div class="campo">
-                <label for="cidade">Cidade</label>
-                <input type="text" id="cidade" name="cidade" style="width: 10em" value="">
-            </div>
-            <div class="campo">
-                <label for="estado">Estado</label>
-                <select name="estado" id="estado">
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="AM">AM</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                </select>
-            </div>
-        </fieldset>
-
-        <div class="campo">
-            <label for="descricao">Descricao</label>
-            <textarea rows="6" style="width: 20em" id="mensagem" name="descricao"></textarea>
-        </div>
-
-        <div class="campo">
-
-            <form action="{%url 'insert' %}" method="post" enctype="multipart/form-data">
-                {{form}}
-            </form>
-        </div>
-
-        <button type="submit" name="submit">Enviar</button>
-    </fieldset>
+    <button type="submit" name="submit">Enviar</button>
 </form>
 {%endblock%}
