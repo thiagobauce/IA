@@ -1,0 +1,62 @@
+volumes:
+  init-db:
+  data-db:
+
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+      - ./data-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: iadmin
+      MONGO_INITDB_ROOT_PASSWORD: iadmin
+      MONGO_INITDB_DATABASE: upfile
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: iadmin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: iadmin
+
+  web:
+    image: recog_proj
+    restart: always
+    command: python manage.py runserver
+    volumes:
+      - .:/app_data
+    ports:
+      - 8000:8000
+    links:
+      - mongodb
+    depends_on:
+      - migration
+
+  migration:
+    build: .
+    image: app
+    command: python manage.py migrate
+    volumes:
+      - .:/app_data
+    links:
+      - mongodb
+    depends_on:
+      - make_migrations
+
+  make_migrations:
+    build: .
+    image: app
+    command: python manage.py makemigrations
+    volumes:
+      - .:/app_data
+    links:
+      - mongodb
+    depends_on:
+      - mongodb

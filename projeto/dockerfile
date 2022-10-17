@@ -1,0 +1,9 @@
+FROM python:3
+
+RUN mkdir /home/app
+WORKDIR /home/app
+COPY . /home/app/
+RUN python3 -m venv venv
+RUN pip install -r requirements.txt
+
+CMD ["python","manage.py","runserver"]
